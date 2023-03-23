@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken"
 
 const authRouter = express.Router();
 
-authRouter.post("/register", async (req, res, next) => {
+authRouter.post("/register", async (req, res) => {
 
     const { username, email, password } = req.body
     const hashedPassword = bcrypt.hashSync(password)
@@ -23,7 +23,7 @@ authRouter.post("/register", async (req, res, next) => {
     }
 })
 
-authRouter.post("/login", async (req, res, next) => {
+authRouter.post("/login", async (req, res) => {
 
     const { username, password } = req.body
     try {
