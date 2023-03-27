@@ -40,7 +40,15 @@ authRouter.post("/login", async (req, res) => {
         },
             process.env.JWT_SECRET_KEY, 
             { expiresIn: "3d" });
-        res.status(200).json({ existingUser,accessToken })
+         res.status(200).json({ 
+            _id: existingUser._id,
+            username: existingUser.username,
+            email: existingUser.email,
+            isAdmin: existingUser.isAdmin,
+            createdAt: existingUser.createdAt,
+            existingUser: existingUser.updatedAt,
+            accessToken 
+        })
     } catch (err) {
         res.status(500).json(err)
     }
