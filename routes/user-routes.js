@@ -5,4 +5,4 @@ const userRouter = express.Router();
 
 userRouter.put("/:id",verifyTokenAndAuthorization);
 
-export default userRouter;
+export default userRouter;      
