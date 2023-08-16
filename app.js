@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import authRouter from "./routes/auth-routes";
 import userRouter from "./routes/user-routes";
 import productRouter from "./routes/product-routes";
+import cartRouter from "./routes/cart-routes";
 
 const app = express();
 dotenv.config();
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use("/api/auth", authRouter)
 app.use("/api/user", userRouter)
 app.use("/api/products", productRouter)
+app.use("/api/cart",cartRouter)
 
 mongoose
   .connect(process.env.MONGO_URL)

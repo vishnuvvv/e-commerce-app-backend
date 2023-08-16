@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../controllers/verify-token";
+import { verifyTokenAndAdmin, verifyTokenAndAuthorization } from "../middlewares/verify-token";
 import { deleteUser, getAllUsers, getUser, getUsersStats, updateUser } from "../controllers/user-controller";
 
 const userRouter = express.Router();

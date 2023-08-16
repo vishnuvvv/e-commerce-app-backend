@@ -33,7 +33,7 @@ export const loginUser =  async (req, res) => {
 
         const accessToken = jwt.sign({id: existingUser._id,
             isAdmin: existingUser.isAdmin
-        }, process.env.JWT_SECRET_KEY, { expiresIn: "3d" });
+        }, process.env.JWT_SECRET_KEY, { expiresIn: "7d" });
 
         res.status(200).json({
             _id: existingUser._id,
