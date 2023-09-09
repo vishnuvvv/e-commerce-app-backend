@@ -7,6 +7,7 @@ import userRouter from "./routes/user-routes";
 import productRouter from "./routes/product-routes";
 import cartRouter from "./routes/cart-routes";
 import orderRouter from "./routes/order-routes";
+import paymentRouter from "./routes/payment-routes";
 
 
 const app = express();
@@ -19,6 +20,7 @@ app.use("/api/user", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
 app.use("/api/orders", orderRouter);
+app.use("/api/checkout", paymentRouter)
 
 mongoose
   .connect(process.env.MONGO_URL)
