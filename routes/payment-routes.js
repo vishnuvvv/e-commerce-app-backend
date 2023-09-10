@@ -1,20 +1,32 @@
 import express from "express";
-import stripe from "stripe";
+import Stripe from "stripe";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const paymentRouter = express.Router();
-const stripeInstance = stripe(process.env.STRIPE_KEY);
+const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
+
 paymentRouter.post("/payment", async (req, res) => {
-  try {
-    const charge = await stripeInstance.charges.create({
-      source: req.body.tokenId,
-      amount: req.body.amount,
+  const { products } = req.body;
+
+  const line_items = products.map((product) => ({
+    price_data: {
       currency: "inr",
-    });
-    res.status(200).json(charge);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Payment failed" });
-  }
+      product_data: { name: product.title },
+      unit_amount: product.price * 100,
+    },
+    quantity: product.quantity,
+  }));
+
+  const session = await stripeInstance.checkout.sessions.create({
+    payment_method_types: ["card"],
+    line_items: line_items,
+    mode: "payment",
+    success_url: "http://localhost:3000/success",
+    cancel_url: "http://localhost:3000/cancel",
+  });
+  res.json({ id: session.id });
 });
 
 export default paymentRouter;
