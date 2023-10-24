@@ -10,6 +10,15 @@ export const createOrder = async (req, res) => {
     }
 }
 
+export const getAllOrders = async (req,res) => {
+    try {
+        const orders = await Order.find()
+        res.status(200).json(orders)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
 export const updateOrder = async (req, res) => {
     const id = req.params.id;
     const orderDetails = req.body;
