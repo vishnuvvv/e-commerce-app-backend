@@ -24,6 +24,6 @@ orderRouter.get(
   verifyTokenAndAuthorization,
   getUserOrders
 );
-orderRouter.get("/get-income", verifyTokenAndAdmin, getIncomeData);
+orderRouter.get("/get-income", getIncomeData);
 
 export default orderRouter;
