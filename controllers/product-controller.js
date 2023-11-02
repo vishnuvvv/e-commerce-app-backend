@@ -1,5 +1,6 @@
 import redisClient from "../config/redis";
 import Product from "../models/Product";
+import User from "../models/User"
 
 export const addNewProduct = async (req, res) => {
   const newProduct = new Product(req.body);
@@ -135,5 +136,79 @@ export const getAllProducts = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json(err);
+  }
+};
+
+
+///########//wishlist controllers/////########///
+
+
+export const addWishlist = async (req, res) => {
+  const userId = req.params.id;
+  const { item } = req.body;
+  console.log(item);
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the item is already in the wishlist
+    if (user.wishlist.includes(item)) {
+      return res
+        .status(400)
+        .json({ message: "Item is already in the wishlist" });
+    }
+
+    user.wishlist.push(item);
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "Item added to wishlist successfully", user });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: err });
+  }
+};
+
+
+export const removeWishlist = async (req, res) => {
+  const userId = req.params.id;
+  const { item } = req.body;
+  console.log(item);
+  // const id = item._id;
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the item is in the wishlist
+    const itemIndex = user.wishlist.indexOf(item);
+    // console.log(itemIndex);
+
+    // Remove the item from the wishlist using splice
+    user.wishlist.splice(itemIndex, 1);
+    await user.save();
+    return res
+      .status(200)
+      .json({ message: "Item removed from wishlist successfully", user, item });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Something went wrong", error: err });
+  }
+};
+
+export const getAllWishlist = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const user = await User.findById(id);
+
+    const wishlist = user.wishlist;
+    return res.status(200).json(wishlist);
+  } catch (err) {
+    return res.status(500).json(err);
   }
 };

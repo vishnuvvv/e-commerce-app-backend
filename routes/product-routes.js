@@ -1,12 +1,25 @@
-import express from "express"
+import express from "express";
 import { verifyTokenAndAdmin } from "../middlewares/verify-token";
-import { addNewProduct, deleteProduct, getAllProducts, getProduct, updateProduct } from "../controllers/product-controller";
+import {
+  addNewProduct,
+  addWishlist,
+  deleteProduct,
+  getAllProducts,
+  getAllWishlist,
+  getProduct,
+  removeWishlist,
+  updateProduct,
+} from "../controllers/product-controller";
 
-const productRouter = express.Router()
+const productRouter = express.Router();
 
 productRouter.post("/add-product", verifyTokenAndAdmin, addNewProduct);
 productRouter.put("/update-product/:id", verifyTokenAndAdmin, updateProduct);
 productRouter.delete("/delete-product/:id", verifyTokenAndAdmin, deleteProduct);
 productRouter.get("/get-product/:id", getProduct);
-productRouter.get("/get-all-products", getAllProducts)
+productRouter.get("/get-all-products", getAllProducts);
+
+productRouter.post("/wishlist/:id", addWishlist);
+productRouter.delete("/wishlist/:id", removeWishlist);
+productRouter.get("/wishlist/getall/:id", getAllWishlist);
 export default productRouter;
