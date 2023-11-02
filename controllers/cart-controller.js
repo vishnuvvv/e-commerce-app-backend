@@ -40,8 +40,9 @@ export const deleteCart = async (req, res) => {
 };
 
 export const getUserCart = async (req, res) => {
+  const userId = req.params.userId
   try {
-    const cart = await Cart.findOne({ userId: req.params.userId });
+    const cart = await Cart.findOne({ userId });
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json(err);
