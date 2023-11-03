@@ -9,8 +9,17 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    image: {
+      type: String,
+    },
+    wishlist: {
+      type: Array,
+    },
+    address: {
+      type: Array,
+    },
   },
   { timestamps: true }
 );
 
-export default mongoose.model("User", userSchema)
+export default mongoose.model("User", userSchema);
