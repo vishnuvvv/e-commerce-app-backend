@@ -1,6 +1,6 @@
 import redisClient from "../config/redis";
 import Product from "../models/Product";
-import User from "../models/User"
+import User from "../models/User";
 
 export const addNewProduct = async (req, res) => {
   const newProduct = new Product(req.body);
@@ -89,7 +89,6 @@ export const getProduct = async (req, res) => {
         "EX",
         3600
       );
-
       res.status(200).json(product);
     }
   } catch (err) {
@@ -139,9 +138,7 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-
 ///########//wishlist controllers/////########///
-
 
 export const addWishlist = async (req, res) => {
   const userId = req.params.id;
@@ -171,7 +168,6 @@ export const addWishlist = async (req, res) => {
       .json({ message: "Something went wrong", error: err });
   }
 };
-
 
 export const removeWishlist = async (req, res) => {
   const userId = req.params.id;
