@@ -1,5 +1,5 @@
 import express from "express";
-import { verifyTokenAndAdmin } from "../middlewares/verify-token";
+import { verifyToken, verifyTokenAndAdmin } from "../middlewares/verify-token";
 import {
   addNewProduct,
   addWishlist,
@@ -19,7 +19,7 @@ productRouter.delete("/delete-product/:id", verifyTokenAndAdmin, deleteProduct);
 productRouter.get("/get-product/:id", getProduct);
 productRouter.get("/get-all-products", getAllProducts);
 
-productRouter.post("/wishlist/:id", addWishlist);
-productRouter.delete("/wishlist/:id", removeWishlist);
+productRouter.post("/add/wishlist/:userId",addWishlist);
+productRouter.delete("/delete/wishlist/userId", removeWishlist);
 productRouter.get("/wishlist/getall/:id", getAllWishlist);
 export default productRouter;

@@ -141,9 +141,10 @@ export const getAllProducts = async (req, res) => {
 ///########//wishlist controllers/////########///
 
 export const addWishlist = async (req, res) => {
-  const userId = req.params.id;
-  const { item } = req.body;
-  console.log(item);
+  const userId = req.params.userId;
+  const item = req.body;
+  console.log(userId);
+
   try {
     const user = await User.findById(userId);
     if (!user) {
