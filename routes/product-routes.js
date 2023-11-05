@@ -20,6 +20,6 @@ productRouter.get("/get-product/:id", getProduct);
 productRouter.get("/get-all-products", getAllProducts);
 
 productRouter.post("/add/wishlist/:userId",addWishlist);
-productRouter.delete("/delete/wishlist/userId", removeWishlist);
+productRouter.delete("/delete/wishlist/:userId", removeWishlist);
 productRouter.get("/wishlist/getall/:id", getAllWishlist);
 export default productRouter;

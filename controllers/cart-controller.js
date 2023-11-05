@@ -21,6 +21,7 @@ export const addToCart = async (req, res) => {
 
 export const deleteCart = async (req, res) => {
   const userId = req.params.userId;
+  console.log(userId);
 
   try {
     const cart = await Cart.findOne({ userId });

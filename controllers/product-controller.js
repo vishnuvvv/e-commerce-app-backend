@@ -143,7 +143,6 @@ export const getAllProducts = async (req, res) => {
 export const addWishlist = async (req, res) => {
   const userId = req.params.userId;
   const item = req.body;
-  console.log(userId);
 
   try {
     const user = await User.findById(userId);
@@ -162,7 +161,7 @@ export const addWishlist = async (req, res) => {
     await user.save();
     return res
       .status(200)
-      .json({ message: "Item added to wishlist successfully", user });
+      .json({ message: "Item added to wishlist successfully", item });
   } catch (err) {
     return res
       .status(500)
@@ -171,16 +170,13 @@ export const addWishlist = async (req, res) => {
 };
 
 export const removeWishlist = async (req, res) => {
-  const userId = req.params.id;
-  const { item } = req.body;
-  console.log(item);
-  // const id = item._id;
+  const userId = req.params.userId;
+  const item = req.body;
   try {
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     // Check if the item is in the wishlist
     const itemIndex = user.wishlist.indexOf(item);
     // console.log(itemIndex);
@@ -190,7 +186,7 @@ export const removeWishlist = async (req, res) => {
     await user.save();
     return res
       .status(200)
-      .json({ message: "Item removed from wishlist successfully", user, item });
+      .json({ message: "Item removed from wishlist successfully", item });
   } catch (err) {
     return res
       .status(500)
