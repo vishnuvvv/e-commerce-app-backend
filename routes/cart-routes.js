@@ -15,7 +15,7 @@ import {
 
 const cartRouter = express.Router();
 
-cartRouter.post("/add-cart", verifyToken, addToCart);
+cartRouter.post("/add-cart", addToCart);
 cartRouter.put("/update-cart/:id", verifyTokenAndAuthorization, updateCart);
 cartRouter.delete("/delete-cart/:userId", deleteCart); //verifyTokenAndAuthorization,
 cartRouter.delete(

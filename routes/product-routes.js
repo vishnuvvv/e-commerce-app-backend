@@ -21,5 +21,5 @@ productRouter.get("/get-all-products", getAllProducts);
 
 productRouter.post("/add/wishlist/:userId",addWishlist);
 productRouter.delete("/delete/wishlist/:userId", removeWishlist);
-productRouter.get("/wishlist/getall/:id", getAllWishlist);
+productRouter.get("/wishlist/getall/:userId", getAllWishlist);
 export default productRouter;

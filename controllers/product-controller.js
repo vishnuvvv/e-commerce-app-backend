@@ -195,7 +195,7 @@ export const removeWishlist = async (req, res) => {
 };
 
 export const getAllWishlist = async (req, res) => {
-  const id = req.params.id;
+  const id = req.params.userId;
   try {
     const user = await User.findById(id);
 
