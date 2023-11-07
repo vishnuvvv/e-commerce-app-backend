@@ -126,10 +126,8 @@ export const getAllProducts = async (req, res) => {
       } else {
         products = await Product.find();
       }
-
       // Cache the product data in Redis for future requests with a TTL (time-to-live)
       await redisClient.set(cacheKey, JSON.stringify(products), "EX", 3600); // Cache for 1 hour (3600 seconds)
-
       res.status(200).json(products);
     }
   } catch (err) {
@@ -178,15 +176,27 @@ export const removeWishlist = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     // Check if the item is in the wishlist
-    const itemIndex = user.wishlist.indexOf(item);
-    // console.log(itemIndex);
+    const itemIndex = user.wishlist.findIndex(
+      (wishlistItem) => wishlistItem.id === item.id
+    );
+
+    if (itemIndex === -1) {
+      return res
+        .status(404)
+        .json({ message: "Item not found in the wishlist" });
+    }
+
+    // Store the item to be removed
+    const removedItem = user.wishlist[itemIndex];
 
     // Remove the item from the wishlist using splice
     user.wishlist.splice(itemIndex, 1);
     await user.save();
-    return res
-      .status(200)
-      .json({ message: "Item removed from wishlist successfully", item });
+
+    return res.status(200).json({
+      message: "Item removed from wishlist successfully",
+      removedItem,
+    });
   } catch (err) {
     return res
       .status(500)
