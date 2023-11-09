@@ -20,7 +20,7 @@ orderRouter.get("/get-all", getAllOrders);
 orderRouter.put("/update-order/:id", verifyTokenAndAdmin, updateOrder);
 orderRouter.delete("/delete-order/:id", verifyTokenAndAdmin, deleteOrder);
 orderRouter.get(
-  "/get-user-orders/:userId",
+  "/get-user-orders/:id",
   verifyTokenAndAuthorization,
   getUserOrders
 );

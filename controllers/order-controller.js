@@ -41,7 +41,7 @@ export const deleteOrder = async (req, res) => {
 
 export const getUserOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.params.userId });
+    const orders = await Order.find({ userId: req.params.id });
     res.status(200).json(orders);
   } catch (err) {
     res.status(500).json(err);
