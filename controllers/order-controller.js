@@ -79,3 +79,53 @@ export const getIncomeData = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+export const deleteProductFromOrder = async (req, res) => {
+  const { id, orderId, productId } = req.params;
+  const userId = id;
+
+  try {
+    // Find the order document by userId
+    const order = await Order.findById(orderId);
+
+    // Check if the order exists
+    if (!order) {
+      return res.status(404).json({ message: "Order not found" });
+    }
+
+    // Find the index of the product in the products array
+    const productIndex = order.products.findIndex(
+      (product) => product._id === productId
+    );
+
+    // Check if the product with the given productId exists
+    if (productIndex === -1) {
+      return res
+        .status(404)
+        .json({ message: "Product not found in the order" });
+    }
+
+    // Store the removed product in a variable
+    const removedProduct = order.products[productIndex];
+
+    // Remove the product from the products array
+    order.products.splice(productIndex, 1);
+
+    // Update the amount in the order (assuming price is present in each product)
+    order.amount -= removedProduct.price;
+
+    // Save the updated order document
+    await order.save();
+
+    // If the products array is empty, delete the entire document
+    if (order.products.length === 0) {
+      await Order.findOneAndDelete({ userId });
+      return res.json({ message: "Order deleted as it became empty" });
+    }
+
+    return res.json({ message: "Product deleted from the order", order });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};

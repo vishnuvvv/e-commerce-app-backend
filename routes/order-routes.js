@@ -11,6 +11,7 @@ import {
   getIncomeData,
   getUserOrders,
   updateOrder,
+  deleteProductFromOrder
 } from "../controllers/order-controller";
 
 const orderRouter = express.Router();
@@ -23,6 +24,11 @@ orderRouter.get(
   "/get-user-orders/:id",
   verifyTokenAndAuthorization,
   getUserOrders
+);
+orderRouter.delete(
+  "/delete-product-from-order/:id/:orderId/:productId",
+  verifyTokenAndAuthorization,
+  deleteProductFromOrder
 );
 orderRouter.get("/get-income", getIncomeData);
 
