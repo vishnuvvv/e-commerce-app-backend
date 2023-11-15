@@ -116,7 +116,7 @@ export const getAllProducts = async (req, res) => {
       let products;
 
       if (countQuery) {
-        products = await Product.find().sort({ createdAt: -1 }).limit(1);
+        products = await Product.find().sort({ createdAt: -1 });
       } else if (categoryQuery) {
         products = await Product.find({
           categories: {
