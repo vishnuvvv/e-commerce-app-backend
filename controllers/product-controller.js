@@ -68,11 +68,11 @@ export const deleteProduct = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const cachedProduct = await redisClient.get(`product:${req.params.id}`); // Check if the product data is cached in Redis
+    const cachedProducts = await redisClient.get(`product:${req.params.id}`); // Check if the product data is cached in Redis
 
-    if (cachedProduct) {
+    if (cachedProducts) {
       // If cached data exists, return it
-      const parsedProduct = JSON.parse(cachedProduct);
+      const parsedProduct = JSON.parse(cachedProducts);
       res.status(200).json(parsedProduct);
     } else {
       const product = await Product.findById(req.params.id); // If data is not in Redis cache, fetch it from MongoDB
@@ -103,7 +103,7 @@ export const getAllProducts = async (req, res) => {
 
   try {
     // Create a unique key for this query based on the request URL and query parameters
-    const cacheKey = `products:${req.originalUrl}`;
+    const cacheKey = `productz:${req.originalUrl}`;
 
     // Check if the product data is cached in Redis
     const cachedProducts = await redisClient.get(cacheKey);
